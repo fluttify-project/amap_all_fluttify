@@ -28,7 +28,7 @@ packages:
       name: amap_search_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0+8cf796c"
+    version: "0.3.2+14a38e3"
   async:
     dependency: transitive
     description:
