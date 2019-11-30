@@ -7,7 +7,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.4.1"
+    version: "0.4.2"
   amap_core_fluttify:
     dependency: transitive
     description:
