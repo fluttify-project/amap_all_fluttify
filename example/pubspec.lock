@@ -7,35 +7,35 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.4.0"
+    version: "0.4.1"
   amap_core_fluttify:
     dependency: transitive
     description:
       name: amap_core_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0+4f403aa"
+    version: "0.2.0+97873c8"
   amap_location_fluttify:
     dependency: transitive
     description:
       name: amap_location_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0+8cf796c"
+    version: "0.3.1+97873c8"
   amap_map_fluttify:
     dependency: transitive
     description:
       name: amap_map_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.0+8d949d5"
+    version: "0.8.4+edd4090"
   amap_search_fluttify:
     dependency: transitive
     description:
       name: amap_search_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.2+14a38e3"
+    version: "0.3.3+97873c8"
   async:
     dependency: transitive
     description:
@@ -87,7 +87,7 @@ packages:
       name: foundation_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.3"
+    version: "0.2.0+1"
   matcher:
     dependency: transitive
     description:
