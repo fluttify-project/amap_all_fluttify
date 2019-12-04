@@ -1,3 +1,8 @@
+## 0.5.0
+- amap_search_fluttify: 0.3.4+97873c8
+- amap_location_fluttify: 0.4.0+82a2243
+- amap_map_fluttify: 0.10.2+a1a3fff
+
 ## 0.4.2
 - amap_search_fluttify: 0.3.3+97873c8
 - amap_location_fluttify: 0.3.1+97873c8
