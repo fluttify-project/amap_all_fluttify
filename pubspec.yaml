@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   amap_search_fluttify: 0.3.4+97873c8
   amap_location_fluttify: 0.4.0+82a2243
-  amap_map_fluttify: 0.10.2+a1a3fff
+  amap_map_fluttify: 0.11.0+a918944
 
 dev_dependencies:
   flutter_test:
