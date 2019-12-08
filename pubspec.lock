@@ -14,7 +14,7 @@ packages:
       name: amap_location_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+82a2243"
+    version: "0.5.1+a918944"
   amap_map_fluttify:
     dependency: "direct main"
     description:
