@@ -5,15 +5,15 @@ author: yohom <382146139@qq.com>
 homepage: https://github.com/fluttify-project/amap_all_fluttify
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.10.13 <2.0.0"
+  sdk: ">=2.6.0 <3.0.0"
+  flutter: ">=1.12.13 <2.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  amap_search_fluttify: 0.4.0+d44bb02
-  amap_location_fluttify: 0.5.1+a918944
-  amap_map_fluttify: 0.13.1+d44bb02
+  amap_search_fluttify: 0.5.0+acdcd89
+  amap_location_fluttify: 0.6.0+acdcd89
+  amap_map_fluttify: 0.14.0+e26c0fa
 
 dev_dependencies:
   flutter_test:
