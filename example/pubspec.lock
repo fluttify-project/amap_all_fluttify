@@ -7,35 +7,35 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.8.0"
+    version: "0.9.0"
   amap_core_fluttify:
     dependency: transitive
     description:
       name: amap_core_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4+bb1f005"
+    version: "0.5.0+ea37ae9"
   amap_location_fluttify:
     dependency: transitive
     description:
       name: amap_location_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1+a918944"
+    version: "0.8.0+ea37ae9"
   amap_map_fluttify:
     dependency: transitive
     description:
       name: amap_map_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.1+d44bb02"
+    version: "0.16.1+a3d4e61"
   amap_search_fluttify:
     dependency: transitive
     description:
       name: amap_search_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+d44bb02"
+    version: "0.7.0+ea37ae9"
   archive:
     dependency: transitive
     description:
@@ -120,7 +120,7 @@ packages:
       name: foundation_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.7+1"
+    version: "0.4.0+1"
   image:
     dependency: transitive
     description:
@@ -251,7 +251,7 @@ packages:
       name: url_launcher_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   url_launcher_web:
     dependency: transitive
     description:
@@ -274,5 +274,5 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
-  dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.12.8 <2.0.0"
+  dart: ">=2.6.0 <3.0.0"
+  flutter: ">=1.12.13 <2.0.0"
