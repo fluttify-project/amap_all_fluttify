@@ -11,9 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  amap_search_fluttify: ^0.7.2+4d92ce0
-  amap_location_fluttify: ^0.8.3+4d92ce0
-  amap_map_fluttify: ^0.17.5+26272df
+  amap_search_fluttify: ^0.7.4+356f11c
+  amap_location_fluttify: ^0.8.6+356f11c
+  amap_map_fluttify: ^0.17.8+356f11c
 
 dev_dependencies:
   flutter_test:
