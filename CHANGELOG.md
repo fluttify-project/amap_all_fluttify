@@ -1,3 +1,6 @@
+## 0.11.2
+- 提升gradle版本
+
 ## 0.11.0
 - amap_search_fluttify: ^0.7.2+4d92ce0
 - amap_location_fluttify: ^0.8.3+4d92ce0
