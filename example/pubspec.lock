@@ -28,7 +28,7 @@ packages:
       name: amap_map_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.0+481e45c"
+    version: "0.18.2+c038d50"
   amap_search_fluttify:
     dependency: transitive
     description:
@@ -120,7 +120,7 @@ packages:
       name: foundation_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.14+2"
+    version: "0.4.16"
   image:
     dependency: transitive
     description:
@@ -149,13 +149,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.4"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.8.0+1"
   petitparser:
     dependency: transitive
     description:
@@ -223,7 +216,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.11"
+    version: "0.2.15"
   typed_data:
     dependency: transitive
     description:
