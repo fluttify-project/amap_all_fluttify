@@ -9,10 +9,10 @@ class MapDemo extends StatelessWidget {
     return ListView(
       children: <Widget>[
         FunctionGroup(
-          headLabel: '地图',
+          headLabel: '搜索',
           children: <Widget>[
             FunctionItem(
-              label: '搜索路线规划并显示到地图',
+              label: '显示路线规划结果',
               sublabel: 'ShowSearchResultScreen',
               target: ShowSearchResultScreen(),
             ),

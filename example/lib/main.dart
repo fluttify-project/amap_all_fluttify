@@ -8,8 +8,8 @@ Future<void> main() async {
   runApp(MyApp());
 
   await AmapService.init(
-    iosKey: 'b515edaa8a1230aa4d2aa9447a7f66d7',
-    androidKey: 'c3b60c1f305f5b18aab83056c6971709',
+    iosKey: 'c3b60c1f305f5b18aab83056c6971709',
+    androidKey: 'b515edaa8a1230aa4d2aa9447a7f66d7',
   );
 }
 
