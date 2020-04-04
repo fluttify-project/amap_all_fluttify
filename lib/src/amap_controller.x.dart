@@ -7,7 +7,7 @@ extension AmapControllerX on AmapController {
   Future<void> addDriveRoute(
     DriveRouteResult driveRouteResult, {
     TrafficOption trafficOption,
-    double lineWidth,
+    double lineWidth = 10,
     Uri customTexture,
     ImageConfiguration imageConfig,
   }) async {

@@ -1,3 +1,7 @@
+## 0.13.1
+- amap_search_fluttify: ^0.8.1
+- feat: 增加addDriveRoute方法
+
 ## 0.13.0
 - amap_search_fluttify: ^0.8.0+b2681d9
 - amap_location_fluttify: ^0.10.0+e74b91b
