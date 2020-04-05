@@ -10,6 +10,9 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="amap_all_fluttify_example"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.amap.api.v2.apikey"
+                   android:value="b515edaa8a1230aa4d2aa9447a7f66d7"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
