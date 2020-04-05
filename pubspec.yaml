@@ -1,6 +1,6 @@
 name: amap_all_fluttify
 description: An `Amap` Flutter plugin, include `search`, `location`, `map` component.
-version: 0.13.1
+version: 0.13.1+1
 author: yohom <yohombao@qq.com>
 homepage: https://github.com/fluttify-project/amap_all_fluttify
 
