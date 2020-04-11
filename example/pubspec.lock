@@ -14,28 +14,28 @@ packages:
       name: amap_core_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0+b2681d9"
+    version: "0.7.0"
   amap_location_fluttify:
     dependency: transitive
     description:
       name: amap_location_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0+e74b91b"
+    version: "0.11.0-dev.1"
   amap_map_fluttify:
     dependency: transitive
     description:
       name: amap_map_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.19.1+b2681d9"
+    version: "0.20.0-dev.3"
   amap_search_fluttify:
     dependency: transitive
     description:
       name: amap_search_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.2+1"
+    version: "0.9.0-dev.0"
   archive:
     dependency: transitive
     description:
@@ -181,7 +181,7 @@ packages:
       name: foundation_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1"
+    version: "0.6.1-dev.5"
   http:
     dependency: transitive
     description:
@@ -287,6 +287,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0+1"
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.0+hotfix.3"
+  permission_handler_platform_interface:
+    dependency: transitive
+    description:
+      name: permission_handler_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   petitparser:
     dependency: transitive
     description:
@@ -426,5 +440,5 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
-  dart: ">=2.6.0 <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13 <2.0.0"
