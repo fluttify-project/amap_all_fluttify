@@ -91,12 +91,9 @@ class _ShowSearchResultScreenState extends State<ShowSearchResultScreen> {
     final toLng = double.tryParse(_toLongitudeController.text);
 
     try {
-      final route = await AmapSearch.searchDriveRoute(
+      _controller.addDriveRoute(
         from: LatLng(fromLat, fromLng),
         to: LatLng(toLat, toLng),
-      );
-      _controller.addDriveRoute(
-        route,
         trafficOption: TrafficOption(show: true),
       );
     } catch (e) {
