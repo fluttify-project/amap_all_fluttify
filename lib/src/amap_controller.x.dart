@@ -1,55 +1,52 @@
 import 'package:flutter/material.dart';
 
 import '../amap_all_fluttify.dart';
-import 'models.dart';
 
 extension AmapControllerX on AmapController {
-  /// 将驾车路线规划结果[driveRouteResult]添加到地图上, 可以配置交通拥堵情况[trafficOption],
-  /// 路线的宽度[lineWidth], 自定纹理[customTexture].
-  Future<void> addDriveRoute(
-    DriveRouteResult driveRouteResult, {
-    TrafficOption trafficOption,
-    double lineWidth = 10,
-    Uri customTexture,
-    ImageConfiguration imageConfig,
+  /// 添加地区轮廓
+  ///
+  /// 地区名称[districtName], 轮廓宽度[width], 轮廓颜色[strokeColor], 填充颜色[fillColor]
+  Future<Polygon> addDistrictOutline(
+    String districtName, {
+    double width = 5,
+    Color strokeColor = Colors.green,
+    Color fillColor = Colors.transparent,
   }) async {
-    assert(driveRouteResult != null);
-    for (final path in await driveRouteResult.drivePathList) {
-      for (final step in await path.driveStepList) {
-        if (trafficOption != null && trafficOption.show) {
-          for (final tmc in await step.tmsList) {
-            final status = await tmc.status;
-            Color statusColor = Colors.green;
-            switch (status) {
-              case '缓行':
-                statusColor = Colors.yellow;
-                break;
-              case '拥堵':
-                statusColor = Colors.red;
-                break;
-              case '未知':
-                statusColor = Colors.blue;
-                break;
-              default:
-                break;
-            }
-            await addPolyline(PolylineOption(
-              latLngList: await tmc.polyline,
-              strokeColor: statusColor,
-              width: lineWidth,
-              customTexture: customTexture,
-              imageConfig: imageConfig,
-            ));
-          }
-        } else {
-          await addPolyline(PolylineOption(
-            latLngList: await step.polyline,
-            width: lineWidth,
-            customTexture: customTexture,
-            imageConfig: imageConfig,
-          ));
-        }
-      }
+    assert(districtName != null && districtName.isNotEmpty);
+    final district =
+        await AmapSearch.searchDistrict(districtName, showBoundary: true);
+
+    final districtList = await district.districtList;
+    if (districtList.isNotEmpty) {
+      List<LatLng> boundary = await (await district.districtList)[0].boundary;
+      return addPolygon(PolygonOption(
+        latLngList: boundary,
+        width: width,
+        strokeColor: strokeColor,
+        fillColor: fillColor,
+      ));
+    } else {
+      return null;
     }
   }
+
+  /// 添加地区轮廓
+  ///
+  /// 地区轮廓经纬度列表[boundary], 轮廓宽度[width], 轮廓颜色[strokeColor], 填充颜色[fillColor]
+  Future<Polygon> addDistrictOutlineWithData(
+    List<LatLng> boundary, {
+    double width = 5,
+    Color strokeColor = Colors.green,
+    Color fillColor = Colors.transparent,
+  }) async {
+    assert(boundary != null && boundary.isNotEmpty);
+    return addPolygon(PolygonOption(
+      latLngList: boundary,
+      width: width,
+      strokeColor: strokeColor,
+      fillColor: fillColor,
+    ));
+  }
+
+  // TODO 批量地区绘制
 }

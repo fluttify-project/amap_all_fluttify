@@ -1,7 +1,7 @@
 import 'package:demo_widgets/demo_widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'show_search_result.screen.dart';
+import 'district_outline.screen.dart';
 
 class MapDemo extends StatelessWidget {
   @override
@@ -9,12 +9,12 @@ class MapDemo extends StatelessWidget {
     return ListView(
       children: <Widget>[
         FunctionGroup(
-          headLabel: '搜索',
+          headLabel: '地区轮廓',
           children: <Widget>[
             FunctionItem(
-              label: '显示路线规划结果',
-              sublabel: 'ShowSearchResultScreen',
-              target: ShowSearchResultScreen(),
+              label: '显示地区轮廓',
+              sublabel: 'DistrictOutlineScreen',
+              target: DistrictOutlineScreen(),
             ),
           ],
         ),
