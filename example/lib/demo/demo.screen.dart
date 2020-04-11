@@ -1,6 +1,8 @@
+import 'package:decorated_flutter/decorated_flutter.dart';
 import 'package:demo_widgets/demo_widgets.dart';
 import 'package:flutter/material.dart';
 
+import 'advance/nearby.screen.dart';
 import 'basic/show_search_result.screen.dart';
 
 class MapDemo extends StatelessWidget {
@@ -18,13 +20,14 @@ class MapDemo extends StatelessWidget {
             ),
           ],
         ),
+        SPACE_BIG_VERTICAL,
         FunctionGroup(
           headLabel: '高阶',
           children: <Widget>[
             FunctionItem(
               label: '附近',
-              sublabel: 'ShowSearchResultScreen',
-              target: ShowSearchResultScreen(),
+              sublabel: 'NearbyScreen',
+              target: NearbyScreen(),
             ),
           ],
         ),
