@@ -28,7 +28,7 @@ packages:
       name: amap_map_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.20.0"
+    version: "0.20.1-dev.0"
   amap_search_fluttify:
     dependency: transitive
     description:
@@ -348,6 +348,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliding_up_panel:
+    dependency: transitive
+    description:
+      name: sliding_up_panel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   source_span:
     dependency: transitive
     description:

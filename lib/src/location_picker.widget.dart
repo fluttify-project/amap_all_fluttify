@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../amap_all_fluttify.dart';
 import 'models.dart';
 
 const _iconSize = 50.0;
+const _panelMinHeight = 400.0;
 
 typedef Future<bool> RequestPermission();
 typedef Widget PoiItemBuilder(Poi poi, bool selected);
@@ -67,37 +69,45 @@ class _LocationPickerState extends State<LocationPicker>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Flexible(
-          child: Stack(
-            children: <Widget>[
-              AmapView(
-                zoomLevel: widget.zoomLevel,
-                zoomGesturesEnabled: widget.zoomGesturesEnabled,
-                showZoomControl: widget.showZoomControl,
-                onMapMoveEnd: (move) async {
-                  // 地图移动结束, 显示跳动动画
-                  _jumpController
-                      .forward()
-                      .then((it) => _jumpController.reverse());
-                  _search(move.latLng);
-                },
-                onMapCreated: (controller) async {
-                  _controller = controller;
-                  if (await widget.requestPermission()) {
-                    await _controller.showMyLocation(MyLocationOption(
-                      strokeColor: Colors.transparent,
-                      fillColor: Colors.transparent,
-                    ));
-                    _search(await _controller.getLocation());
-                  } else {
-                    debugPrint('权限请求被拒绝!');
-                  }
-                },
-              ),
-              Center(
-                child: Center(
+    return SlidingUpPanel(
+      parallaxEnabled: true,
+      parallaxOffset: 0.5,
+      minHeight: _panelMinHeight,
+      borderRadius: BorderRadius.circular(8),
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            child: Stack(
+              children: <Widget>[
+                AmapView(
+                  zoomLevel: widget.zoomLevel,
+                  zoomGesturesEnabled: widget.zoomGesturesEnabled,
+                  showZoomControl: widget.showZoomControl,
+                  onMapMoveEnd: (move) async {
+                    // 地图移动结束, 显示跳动动画
+                    _jumpController
+                        .forward()
+                        .then((it) => _jumpController.reverse());
+                    _search(move.latLng);
+                  },
+                  onMapCreated: (controller) async {
+                    _controller = controller;
+                    if (await widget.requestPermission()) {
+                      await _controller.showMyLocation(MyLocationOption(
+                        strokeColor: Colors.transparent,
+                        fillColor: Colors.transparent,
+                        iconUri: Uri.parse('images/location.png'),
+                        package: 'amap_all_fluttify',
+                        imageConfiguration:
+                            createLocalImageConfiguration(context),
+                      ));
+                      _search(await _controller.getLocation());
+                    } else {
+                      debugPrint('权限请求被拒绝!');
+                    }
+                  },
+                ),
+                Center(
                   child: AnimatedBuilder(
                     animation: _tween,
                     builder: (context, child) {
@@ -117,40 +127,43 @@ class _LocationPickerState extends State<LocationPicker>
                         ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Flexible(
-          child: StreamBuilder<List<PoiInfo>>(
-            stream: _poiStream.stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final data = snapshot.data;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    final poi = data[index].poi;
-                    final selected = data[index].selected;
-                    return GestureDetector(
-                      onTap: () {
-                        for (int i = 0; i < data.length; i++) {
-                          data[i].selected = i == index;
-                        }
-                        _poiStream.add(data);
-                      },
-                      child: widget.poiItemBuilder(poi, selected),
-                    );
-                  },
-                );
-              } else {
-                return Center();
-              }
-            },
-          ),
-        ),
-      ],
+          // 用来抵消panel的最小高度
+          SizedBox(height: _panelMinHeight),
+        ],
+      ),
+      panelBuilder: (scrollController) {
+        return StreamBuilder<List<PoiInfo>>(
+          stream: _poiStream.stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final data = snapshot.data;
+              return ListView.builder(
+                controller: scrollController,
+                shrinkWrap: true,
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  final poi = data[index].poi;
+                  final selected = data[index].selected;
+                  return GestureDetector(
+                    onTap: () {
+                      for (int i = 0; i < data.length; i++) {
+                        data[i].selected = i == index;
+                      }
+                      _poiStream.add(data);
+                    },
+                    child: widget.poiItemBuilder(poi, selected),
+                  );
+                },
+              );
+            } else {
+              return Center();
+            }
+          },
+        );
+      },
     );
   }
 
