@@ -23,3 +23,5 @@ flutter:
   plugin:
     androidPackage: me.yohom.amap_all_fluttify
     pluginClass: AmapAllFluttifyPlugin
+  assets:
+    - images/
