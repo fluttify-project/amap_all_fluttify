@@ -11,7 +11,6 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('位置选择')),
       body: LocationPicker(
         requestPermission: () {
           return Permission.location.request().then((it) => it.isGranted);

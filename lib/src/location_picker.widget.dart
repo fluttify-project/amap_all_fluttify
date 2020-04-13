@@ -7,7 +7,9 @@ import '../amap_all_fluttify.dart';
 import 'models.dart';
 
 const _iconSize = 50.0;
-const _panelMinHeight = 400.0;
+const _package = 'amap_all_fluttify';
+const _indicator = 'images/indicator.png';
+const _locator = 'images/locator.png';
 
 typedef Future<bool> RequestPermission();
 typedef Widget PoiItemBuilder(Poi poi, bool selected);
@@ -58,6 +60,8 @@ class _LocationPickerState extends State<LocationPicker>
   AnimationController _jumpController;
   Animation<Offset> _tween;
 
+  double _fabHeight = 16;
+
   @override
   void initState() {
     super.initState();
@@ -69,11 +73,17 @@ class _LocationPickerState extends State<LocationPicker>
 
   @override
   Widget build(BuildContext context) {
+    final minPanelHeight = MediaQuery.of(context).size.height * 0.4;
+    final maxPanelHeight = MediaQuery.of(context).size.height * 0.7;
     return SlidingUpPanel(
       parallaxEnabled: true,
       parallaxOffset: 0.5,
-      minHeight: _panelMinHeight,
+      minHeight: minPanelHeight,
+      maxHeight: maxPanelHeight,
       borderRadius: BorderRadius.circular(8),
+      onPanelSlide: (double pos) => setState(() {
+        _fabHeight = pos * (maxPanelHeight - minPanelHeight) * .5 + 16;
+      }),
       body: Column(
         children: <Widget>[
           Flexible(
@@ -93,20 +103,14 @@ class _LocationPickerState extends State<LocationPicker>
                   onMapCreated: (controller) async {
                     _controller = controller;
                     if (await widget.requestPermission()) {
-                      await _controller.showMyLocation(MyLocationOption(
-                        strokeColor: Colors.transparent,
-                        fillColor: Colors.transparent,
-                        iconUri: Uri.parse('images/location.png'),
-                        package: 'amap_all_fluttify',
-                        imageConfiguration:
-                            createLocalImageConfiguration(context),
-                      ));
+                      await _showMyLocation();
                       _search(await _controller.getLocation());
                     } else {
                       debugPrint('权限请求被拒绝!');
                     }
                   },
                 ),
+                // 中心指示器
                 Center(
                   child: AnimatedBuilder(
                     animation: _tween,
@@ -121,17 +125,30 @@ class _LocationPickerState extends State<LocationPicker>
                     },
                     child: widget.centerIndicator ??
                         Image.asset(
-                          'images/indicator.png',
+                          _indicator,
                           height: _iconSize,
-                          package: 'amap_all_fluttify',
+                          package: _package,
                         ),
+                  ),
+                ),
+                // 定位按钮
+                Positioned(
+                  right: 16.0,
+                  bottom: _fabHeight,
+                  child: FloatingActionButton(
+                    child: Icon(
+                      Icons.gps_fixed,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    onPressed: _showMyLocation,
+                    backgroundColor: Colors.white,
                   ),
                 ),
               ],
             ),
           ),
           // 用来抵消panel的最小高度
-          SizedBox(height: _panelMinHeight),
+          SizedBox(height: minPanelHeight),
         ],
       ),
       panelBuilder: (scrollController) {
@@ -141,6 +158,7 @@ class _LocationPickerState extends State<LocationPicker>
             if (snapshot.hasData) {
               final data = snapshot.data;
               return ListView.builder(
+                padding: EdgeInsets.zero,
                 controller: scrollController,
                 shrinkWrap: true,
                 itemCount: data.length,
@@ -180,5 +198,19 @@ class _LocationPickerState extends State<LocationPicker>
         // 默认勾选第一项
         .then((poiInfoList) => poiInfoList..[0].selected = true)
         .then(_poiStream.add);
+  }
+
+  Future<void> _showMyLocation() async {
+    await _controller?.showMyLocation(MyLocationOption(
+      strokeColor: Colors.transparent,
+      fillColor: Colors.transparent,
+    ));
+  }
+
+  Future<void> _setCenterCoordinate(LatLng coordinate) async {
+    await _controller.setCenterCoordinate(
+      coordinate.latitude,
+      coordinate.longitude,
+    );
   }
 }
