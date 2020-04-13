@@ -10,6 +10,7 @@ const _iconSize = 50.0;
 const _package = 'amap_all_fluttify';
 const _indicator = 'images/indicator.png';
 const _locator = 'images/locator.png';
+double _fabHeight = 16.0;
 
 typedef Future<bool> RequestPermission();
 typedef Widget PoiItemBuilder(Poi poi, bool selected);
@@ -60,7 +61,8 @@ class _LocationPickerState extends State<LocationPicker>
   AnimationController _jumpController;
   Animation<Offset> _tween;
 
-  double _fabHeight = 16;
+  // 是否用户手势移动地图
+  bool _moveByUser = true;
 
   @override
   void initState() {
@@ -94,11 +96,14 @@ class _LocationPickerState extends State<LocationPicker>
                   zoomGesturesEnabled: widget.zoomGesturesEnabled,
                   showZoomControl: widget.showZoomControl,
                   onMapMoveEnd: (move) async {
-                    // 地图移动结束, 显示跳动动画
-                    _jumpController
-                        .forward()
-                        .then((it) => _jumpController.reverse());
-                    _search(move.latLng);
+                    if (_moveByUser) {
+                      // 地图移动结束, 显示跳动动画
+                      _jumpController
+                          .forward()
+                          .then((it) => _jumpController.reverse());
+                      _search(move.latLng);
+                    }
+                    _moveByUser = true;
                   },
                   onMapCreated: (controller) async {
                     _controller = controller;
@@ -171,6 +176,7 @@ class _LocationPickerState extends State<LocationPicker>
                         data[i].selected = i == index;
                       }
                       _poiStream.add(data);
+                      _setCenterCoordinate(poi.latLng);
                     },
                     child: widget.poiItemBuilder(poi, selected),
                   );
@@ -212,5 +218,6 @@ class _LocationPickerState extends State<LocationPicker>
       coordinate.latitude,
       coordinate.longitude,
     );
+    _moveByUser = false;
   }
 }
