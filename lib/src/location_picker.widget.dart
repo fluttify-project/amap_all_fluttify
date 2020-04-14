@@ -50,28 +50,12 @@ class LocationPicker extends StatefulWidget {
 }
 
 class _LocationPickerState extends State<LocationPicker>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, _BLoCMixin, _AnimationMixin {
   // 地图控制器
   AmapController _controller;
 
-  // poi流
-  final _poiStream = StreamController<List<PoiInfo>>();
-
-  // 动画相关
-  AnimationController _jumpController;
-  Animation<Offset> _tween;
-
   // 是否用户手势移动地图
   bool _moveByUser = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _jumpController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    _tween = Tween(begin: Offset(0, 0), end: Offset(0, -15)).animate(
-        CurvedAnimation(parent: _jumpController, curve: Curves.easeInOut));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,9 +125,17 @@ class _LocationPickerState extends State<LocationPicker>
                   right: 16.0,
                   bottom: _fabHeight,
                   child: FloatingActionButton(
-                    child: Icon(
-                      Icons.gps_fixed,
-                      color: Theme.of(context).primaryColor,
+                    child: StreamBuilder<bool>(
+                      stream: _onMyLocation.stream,
+                      initialData: true,
+                      builder: (context, snapshot) {
+                        return Icon(
+                          Icons.gps_fixed,
+                          color: snapshot.data
+                              ? Theme.of(context).primaryColor
+                              : Colors.black54,
+                        );
+                      },
                     ),
                     onPressed: _showMyLocation,
                     backgroundColor: Colors.white,
@@ -175,6 +167,7 @@ class _LocationPickerState extends State<LocationPicker>
                       for (int i = 0; i < data.length; i++) {
                         data[i].selected = i == index;
                       }
+                      _onMyLocation.add(index == 0);
                       _poiStream.add(data);
                       _setCenterCoordinate(poi.latLng);
                     },
@@ -191,13 +184,6 @@ class _LocationPickerState extends State<LocationPicker>
     );
   }
 
-  @override
-  void dispose() {
-    _poiStream?.close();
-    _jumpController?.dispose();
-    super.dispose();
-  }
-
   Future<void> _search(LatLng location) async {
     AmapSearch.searchAround(location)
         .then((poiList) => poiList.map((poi) => PoiInfo(poi)).toList())
@@ -207,6 +193,7 @@ class _LocationPickerState extends State<LocationPicker>
   }
 
   Future<void> _showMyLocation() async {
+    _onMyLocation.add(true);
     await _controller?.showMyLocation(MyLocationOption(
       strokeColor: Colors.transparent,
       fillColor: Colors.transparent,
@@ -219,5 +206,40 @@ class _LocationPickerState extends State<LocationPicker>
       coordinate.longitude,
     );
     _moveByUser = false;
+  }
+}
+
+mixin _BLoCMixin on State<LocationPicker> {
+  // poi流
+  final _poiStream = StreamController<List<PoiInfo>>();
+  // 是否在我的位置
+  final _onMyLocation = StreamController<bool>();
+
+  @override
+  void dispose() {
+    _poiStream.close();
+    _onMyLocation.close();
+    super.dispose();
+  }
+}
+
+mixin _AnimationMixin on SingleTickerProviderStateMixin<LocationPicker> {
+  // 动画相关
+  AnimationController _jumpController;
+  Animation<Offset> _tween;
+
+  @override
+  void initState() {
+    super.initState();
+    _jumpController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _tween = Tween(begin: Offset(0, 0), end: Offset(0, -15)).animate(
+        CurvedAnimation(parent: _jumpController, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _jumpController?.dispose();
+    super.dispose();
   }
 }
