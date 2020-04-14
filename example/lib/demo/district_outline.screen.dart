@@ -10,7 +10,7 @@ class DistrictOutlineScreen extends StatefulWidget {
 class _DistrictOutlineScreenState extends State<DistrictOutlineScreen> {
   AmapController _controller;
   TextEditingController _districtNameController = TextEditingController();
-  Polygon _currentOutline;
+  List<Polygon> _currentOutline = [];
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +45,9 @@ class _DistrictOutlineScreenState extends State<DistrictOutlineScreen> {
   }
 
   Future<void> _handleAddDistrictOutline() async {
-    await _currentOutline?.remove();
-    _currentOutline =
+    final polygonList =
         await _controller.addDistrictOutline(_districtNameController.text);
+    _currentOutline.addAll(polygonList);
   }
 
   @override
