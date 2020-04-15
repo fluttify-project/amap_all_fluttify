@@ -45,9 +45,34 @@ class _DistrictOutlineScreenState extends State<DistrictOutlineScreen> {
   }
 
   Future<void> _handleAddDistrictOutline() async {
-    final polygonList =
-        await _controller.addDistrictOutline(_districtNameController.text);
-    _currentOutline.addAll(polygonList);
+    final provinceList = [
+      '河北省',
+      '山西省',
+      '辽宁省',
+      '吉林省',
+      '黑龙江省',
+      '江苏省',
+      '浙江省',
+      '安徽省',
+      '福建省',
+      '江西省',
+      '山东省',
+      '河南省',
+      '湖北省',
+      '湖南省',
+      '广东省',
+      '海南省',
+      '四川省',
+      '贵州省',
+      '云南省',
+      '陕西省',
+      '甘肃省',
+      '青海省',
+      '台湾省',
+    ];
+    for (final province in provinceList) {
+      await _controller.addDistrictOutline(province);
+    }
   }
 
   @override
