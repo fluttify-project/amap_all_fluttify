@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_easyrefresh/material_footer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../amap_all_fluttify.dart';
@@ -23,6 +25,8 @@ class LocationPicker extends StatefulWidget {
     this.zoomGesturesEnabled = false,
     this.showZoomControl = false,
     this.centerIndicator,
+    this.enableLoadMore = true,
+//    this.loadMore = true,
   })  : assert(zoomLevel != null && zoomLevel >= 3 && zoomLevel <= 19),
         super(key: key);
 
@@ -44,6 +48,9 @@ class LocationPicker extends StatefulWidget {
   /// 地图中心指示器
   final Widget centerIndicator;
 
+  /// 是否开启加载更多
+  final bool enableLoadMore;
+
   @override
   _LocationPickerState createState() => _LocationPickerState();
 }
@@ -55,6 +62,15 @@ class _LocationPickerState extends State<LocationPicker>
 
   // 是否用户手势移动地图
   bool _moveByUser = true;
+
+  // 当前请求到的poi列表
+  List<PoiInfo> _poiInfoList = [];
+
+  // 当前地图中心点
+  LatLng _currentCenterCoordinate;
+
+  // 页数
+  int _page = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +103,8 @@ class _LocationPickerState extends State<LocationPicker>
                       _search(move.latLng);
                     }
                     _moveByUser = true;
+                    // 保存当前地图中心点数据
+                    _currentCenterCoordinate = move.latLng;
                   },
                   onMapCreated: (controller) async {
                     _controller = controller;
@@ -153,29 +171,33 @@ class _LocationPickerState extends State<LocationPicker>
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final data = snapshot.data;
-              return ListView.builder(
-                padding: EdgeInsets.zero,
-                controller: scrollController,
-                shrinkWrap: true,
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  final poi = data[index].poi;
-                  final selected = data[index].selected;
-                  return GestureDetector(
-                    onTap: () {
-                      for (int i = 0; i < data.length; i++) {
-                        data[i].selected = i == index;
-                      }
-                      _onMyLocation.add(index == 0);
-                      _poiStream.add(data);
-                      _setCenterCoordinate(poi.latLng);
-                    },
-                    child: widget.poiItemBuilder(poi, selected),
-                  );
-                },
+              return EasyRefresh(
+                footer: MaterialFooter(),
+                onLoad: widget.enableLoadMore ? _handleLoadMore : null,
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    final poi = data[index].poi;
+                    final selected = data[index].selected;
+                    return GestureDetector(
+                      onTap: () {
+                        for (int i = 0; i < data.length; i++) {
+                          data[i].selected = i == index;
+                        }
+                        _onMyLocation.add(index == 0);
+                        _poiStream.add(data);
+                        _setCenterCoordinate(poi.latLng);
+                      },
+                      child: widget.poiItemBuilder(poi, selected),
+                    );
+                  },
+                ),
               );
             } else {
-              return Center();
+              return Center(child: CircularProgressIndicator());
             }
           },
         );
@@ -184,11 +206,14 @@ class _LocationPickerState extends State<LocationPicker>
   }
 
   Future<void> _search(LatLng location) async {
-    AmapSearch.searchAround(location)
-        .then((poiList) => poiList.map((poi) => PoiInfo(poi)).toList())
-        // 默认勾选第一项
-        .then((poiInfoList) => poiInfoList..[0].selected = true)
-        .then(_poiStream.add);
+    final poiList = await AmapSearch.searchAround(location);
+    _poiInfoList = poiList.map((poi) => PoiInfo(poi)).toList();
+    // 默认勾选第一项
+    _poiInfoList[0].selected = true;
+    _poiStream.add(_poiInfoList);
+
+    // 重置页数
+    _page = 1;
   }
 
   Future<void> _showMyLocation() async {
@@ -200,17 +225,24 @@ class _LocationPickerState extends State<LocationPicker>
   }
 
   Future<void> _setCenterCoordinate(LatLng coordinate) async {
-    await _controller.setCenterCoordinate(
-      coordinate.latitude,
-      coordinate.longitude,
-    );
+    await _controller.setCenterCoordinate(coordinate);
     _moveByUser = false;
+  }
+
+  Future<void> _handleLoadMore() async {
+    final poiList = await AmapSearch.searchAround(
+      _currentCenterCoordinate,
+      page: ++_page,
+    );
+    _poiInfoList.addAll(poiList.map((poi) => PoiInfo(poi)).toList());
+    _poiStream.add(_poiInfoList);
   }
 }
 
 mixin _BLoCMixin on State<LocationPicker> {
   // poi流
   final _poiStream = StreamController<List<PoiInfo>>();
+
   // 是否在我的位置
   final _onMyLocation = StreamController<bool>();
 
