@@ -26,7 +26,7 @@ class LocationPicker extends StatefulWidget {
     this.showZoomControl = false,
     this.centerIndicator,
     this.enableLoadMore = true,
-//    this.loadMore = true,
+    this.onItemSelected,
   })  : assert(zoomLevel != null && zoomLevel >= 3 && zoomLevel <= 19),
         super(key: key);
 
@@ -51,6 +51,9 @@ class LocationPicker extends StatefulWidget {
   /// 是否开启加载更多
   final bool enableLoadMore;
 
+  /// 选中回调
+  final ValueChanged<PoiInfo> onItemSelected;
+
   @override
   _LocationPickerState createState() => _LocationPickerState();
 }
@@ -59,6 +62,7 @@ class _LocationPickerState extends State<LocationPicker>
     with SingleTickerProviderStateMixin, _BLoCMixin, _AnimationMixin {
   // 地图控制器
   AmapController _controller;
+  final PanelController _panelController = PanelController();
 
   // 是否用户手势移动地图
   bool _moveByUser = true;
@@ -77,6 +81,7 @@ class _LocationPickerState extends State<LocationPicker>
     final minPanelHeight = MediaQuery.of(context).size.height * 0.4;
     final maxPanelHeight = MediaQuery.of(context).size.height * 0.7;
     return SlidingUpPanel(
+      controller: _panelController,
       parallaxEnabled: true,
       parallaxOffset: 0.5,
       minHeight: minPanelHeight,
@@ -184,12 +189,20 @@ class _LocationPickerState extends State<LocationPicker>
                     final selected = data[index].selected;
                     return GestureDetector(
                       onTap: () {
+                        // 遍历数据列表, 设置当前被选中的数据项
                         for (int i = 0; i < data.length; i++) {
                           data[i].selected = i == index;
                         }
+                        // 如果索引是0, 说明是当前位置, 更新这个数据
                         _onMyLocation.add(index == 0);
+                        // 刷新数据
                         _poiStream.add(data);
+                        // 设置地图中心点
                         _setCenterCoordinate(poi.latLng);
+                        // 回调
+                        if (widget.onItemSelected != null) {
+                          widget.onItemSelected(data[index]);
+                        }
                       },
                       child: widget.poiItemBuilder(poi, selected),
                     );
