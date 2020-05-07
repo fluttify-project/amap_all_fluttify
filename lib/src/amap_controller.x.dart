@@ -4,6 +4,8 @@ import '../amap_all_fluttify.dart';
 import 'models.dart';
 
 extension AmapControllerX on AmapController {
+  /// 将驾车路线规划结果[driveRouteResult]添加到地图上, 可以配置交通拥堵情况[trafficOption],
+  /// 路线的宽度[lineWidth], 自定纹理[customTexture].
   Future<void> addDriveRoute(
     DriveRouteResult driveRouteResult, {
     TrafficOption trafficOption,
