@@ -7,6 +7,7 @@ import 'demo/demo.screen.dart';
 Future<void> main() async {
   runApp(MyApp());
 
+  await enableFluttifyLog(false);
   await AmapService.init(
     iosKey: 'c3b60c1f305f5b18aab83056c6971709',
     androidKey: 'b515edaa8a1230aa4d2aa9447a7f66d7',
