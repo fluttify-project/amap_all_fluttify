@@ -1,7 +1,9 @@
 import 'package:demo_widgets/demo_widgets.dart';
 import 'package:flutter/material.dart';
 
+import 'district_outline.screen.dart';
 import 'location_picker.screen.dart';
+import 'show_search_result.screen.dart';
 
 class MapDemo extends StatelessWidget {
   @override
@@ -15,6 +17,26 @@ class MapDemo extends StatelessWidget {
               label: '选择位置',
               sublabel: 'LocationPickerScreen',
               target: LocationPickerScreen(),
+            ),
+          ],
+        ),
+        FunctionGroup(
+          headLabel: '搜索',
+          children: <Widget>[
+            FunctionItem(
+              label: '显示路线规划结果',
+              sublabel: 'ShowSearchResultScreen',
+              target: ShowSearchResultScreen(),
+            ),
+          ],
+        ),
+        FunctionGroup(
+          headLabel: '地区轮廓',
+          children: <Widget>[
+            FunctionItem(
+              label: '显示地区轮廓',
+              sublabel: 'DistrictOutlineScreen',
+              target: DistrictOutlineScreen(),
             ),
           ],
         ),
