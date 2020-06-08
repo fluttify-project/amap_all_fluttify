@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'district_outline.screen.dart';
 import 'location_picker.screen.dart';
+import 'nearby.screen.dart';
 import 'show_search_result.screen.dart';
 
 class MapDemo extends StatelessWidget {
@@ -37,6 +38,16 @@ class MapDemo extends StatelessWidget {
               label: '显示地区轮廓',
               sublabel: 'DistrictOutlineScreen',
               target: DistrictOutlineScreen(),
+            ),
+          ],
+        ),
+        FunctionGroup(
+          headLabel: '附近',
+          children: <Widget>[
+            FunctionItem(
+              label: '显示附近',
+              sublabel: 'NearbyScreen',
+              target: NearbyScreen(),
             ),
           ],
         ),

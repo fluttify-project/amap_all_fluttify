@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:amap_core_fluttify/amap_core_fluttify.dart';
 
 mixin NextLatLng {
+  // 需要减去0.5 以生成一半正数一半负数
   final random = Random();
 
   LatLng getNextLatLng({
@@ -11,8 +12,8 @@ mixin NextLatLng {
     int radius = 1,
   }) {
     return LatLng(
-      centerLatitude + random.nextDouble() * radius,
-      centerLongitude + random.nextDouble() * radius,
+      centerLatitude + (random.nextDouble() - 0.5) * radius,
+      centerLongitude + (random.nextDouble() - 0.5) * radius,
     );
   }
 
@@ -25,8 +26,8 @@ mixin NextLatLng {
     return [
       for (int i = 0; i < count; i++)
         LatLng(
-          centerLatitude + random.nextDouble() * radius,
-          centerLongitude + random.nextDouble() * radius,
+          centerLatitude + (random.nextDouble() - 0.5) * radius,
+          centerLongitude + (random.nextDouble() - 0.5) * radius,
         )
     ];
   }
