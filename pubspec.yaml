@@ -11,9 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  amap_search_fluttify: ^0.10.0
+  amap_search_fluttify: ^0.10.1
   amap_location_fluttify: ^0.13.0
-  amap_map_fluttify: ^0.23.1
+  amap_map_fluttify: ^0.23.3
   sliding_up_panel: ^1.0.2
   flutter_easyrefresh: ^2.1.1
 
