@@ -1,3 +1,7 @@
+## 0.16.3
+- amap_search_fluttify: ^0.10.1
+- amap_map_fluttify: ^0.23.3
+
 ## 0.16.2
 - feat: 增加附近功能
 
