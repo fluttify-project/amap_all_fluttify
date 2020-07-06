@@ -222,7 +222,7 @@ class _LocationPickerState extends State<LocationPicker>
     final poiList = await AmapSearch.searchAround(location);
     _poiInfoList = poiList.map((poi) => PoiInfo(poi)).toList();
     // 默认勾选第一项
-    _poiInfoList[0].selected = true;
+    if (_poiInfoList.isNotEmpty) _poiInfoList[0].selected = true;
     _poiStream.add(_poiInfoList);
 
     // 重置页数

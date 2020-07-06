@@ -28,7 +28,7 @@ packages:
       name: amap_map_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.23.3"
+    version: "0.23.4"
   amap_search_fluttify:
     dependency: transitive
     description:
@@ -105,7 +105,7 @@ packages:
       name: core_location_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.3"
   crypto:
     dependency: transitive
     description:
@@ -195,7 +195,7 @@ packages:
       name: foundation_fluttify
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.9"
+    version: "0.8.10"
   http:
     dependency: transitive
     description:
