@@ -13,8 +13,7 @@ extension AmapControllerX on AmapController {
     @required LatLng to,
     TrafficOption trafficOption,
     double lineWidth = 10,
-    Uri customTexture,
-    ImageConfiguration imageConfig,
+    ImageProvider customTexture,
   }) async {
     assert(from != null && to != null);
     // 搜索路径
@@ -44,16 +43,14 @@ extension AmapControllerX on AmapController {
               latLngList: await tmc.polyline,
               strokeColor: statusColor,
               width: lineWidth,
-              customTexture: customTexture,
-              imageConfig: imageConfig,
+              textureProvider: customTexture,
             ));
           }
         } else {
           await addPolyline(PolylineOption(
             latLngList: await step.polyline,
             width: lineWidth,
-            customTexture: customTexture,
-            imageConfig: imageConfig,
+            textureProvider: customTexture,
           ));
         }
       }

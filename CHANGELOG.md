@@ -1,3 +1,8 @@
+## 0.17.0
+- amap_search_fluttify: ^0.10.1
+- amap_location_fluttify: ^0.13.2
+- amap_map_fluttify: ^0.24.0
+
 ## 0.16.4
 - amap_map_fluttify: ^0.23.4
 
